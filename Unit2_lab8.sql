@@ -20,11 +20,26 @@ USING (category_id)
 GROUP BY name;
 
 # 4. Which actor has appeared in the most films? Hint: You can create a join between the tables "actor" and "film actor" and count the number of times an actor appears.
+-- Heads up: I have 2 results depending on whether I used group by the full name or by actor_id
+# full name
 SELECT CONCAT(first_name," ", last_name) as full_name, COUNT(film_id) as film_starring -- decided to join first and last names to create just one column. makes things simpler, I think :)
 FROM actor as a
 INNER JOIN film_actor as f
 USING (actor_id)
 GROUP BY full_name
+ORDER BY film_starring DESC
+LIMIT 1; -- there are 2 actor ids for Susan Davis so maybe they are 2 different people!!!
+
+SELECT *
+FROM actor
+WHERE actor_id = 101 OR actor_id = 110;
+
+# actor id
+SELECT first_name, last_name, COUNT(film_id) as film_starring
+FROM actor as a
+INNER JOIN film_actor as f
+USING (actor_id)
+GROUP BY actor_id
 ORDER BY film_starring DESC
 LIMIT 1;
 
